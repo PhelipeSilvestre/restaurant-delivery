@@ -29,10 +29,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       password: event.password,
     );
 
-    result.fold(
-      (failure) => emit(AuthError(failure.message)),
-      (user) => emit(AuthAuthenticated(user)),
-    );
+    result.fold((failure) => emit(AuthError(failure.message)), (user) {
+      // Emitir o estado com o token
+      emit(AuthAuthenticated(user: user, token: user.token));
+    });
   }
 
   Future<void> _onRegisterRequested(
@@ -50,7 +50,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
     result.fold(
       (failure) => emit(AuthError(failure.message)),
-      (user) => emit(AuthAuthenticated(user)),
+      (user) => emit(AuthAuthenticated(user: user, token: user.token)),
     );
   }
 

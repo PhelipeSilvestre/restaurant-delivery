@@ -12,6 +12,7 @@ import 'package:restaurant_delivery/domain/usecases/auth/register_user.dart';
 import 'package:restaurant_delivery/domain/usecases/products/get_products.dart';
 import 'package:restaurant_delivery/presentation/bloc/auth/auth_bloc.dart';
 import 'package:restaurant_delivery/presentation/bloc/product/product_bloc.dart';
+import 'package:hive/hive.dart';
 
 final GetIt sl = GetIt.instance;
 bool _isInitialized = false;
@@ -36,6 +37,11 @@ Future<void> setupDependencies() async {
 
   try {
     debugPrint('Starting dependency initialization...');
+
+    // Inicializar Hive Box para dados simples
+    debugPrint('Opening Hive box for app storage...');
+    final box = await Hive.openBox('app_storage'); // Cria ou abre a caixa
+    sl.registerLazySingleton<Box>(() => box); // Registra a caixa no GetIt
 
     // Serviços externos - inicialização baseada na plataforma
     await _initializePlatformDependentServices();

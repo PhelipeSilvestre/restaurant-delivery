@@ -26,10 +26,14 @@ class AuthRepositoryImpl implements AuthRepository {
           id: userData['id'] ?? '',
           name: userData['name'] ?? '',
           email: userData['email'] ?? '',
+          token: userData['token'] ?? '',
           phone: userData['phone'],
         );
+
+        // Capturar o token
+        final token = response['token'];
         debugPrint('AuthRepositoryImpl: Login successful for: $email');
-        return Right(user);
+        return Right(user.copyWith(token: token)); // Passar o token
       } else {
         debugPrint('AuthRepositoryImpl: Login failed: ${response['error']}');
         return Left(AuthFailure(response['error'] ?? 'Login failed'));
@@ -63,6 +67,7 @@ class AuthRepositoryImpl implements AuthRepository {
           id: userData['id'] ?? '',
           name: userData['name'] ?? '',
           email: userData['email'] ?? '',
+          token: userData['token'] ?? '',
           phone: userData['phone'],
         );
         debugPrint('AuthRepositoryImpl: Registration successful for: $email');

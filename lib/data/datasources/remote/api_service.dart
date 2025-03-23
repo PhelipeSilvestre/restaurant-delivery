@@ -95,12 +95,13 @@ class ApiService {
 
   Future<Map<String, dynamic>> login(String email, String password) async {
     try {
-      debugPrint('Attempting login for: $email');
-      // Implementação de login simulado para teste
+      debugPrint('Simulating login for: $email');
+      // Simulação de login
       await Future.delayed(Duration(seconds: 1));
       return {
         'success': true,
         'user': {'id': '123', 'email': email, 'name': 'Test User'},
+        'token': 'fake_jwt_token_12345', // Token simulado
       };
     } catch (e) {
       debugPrint('Login error: $e');
@@ -115,16 +116,29 @@ class ApiService {
     String phone,
   ) async {
     try {
-      debugPrint('Attempting registration for: $email');
-      // Implementação de registro simulado para teste
+      debugPrint('Simulating registration for: $email');
+      // Simulação de registro
       await Future.delayed(Duration(seconds: 1));
       return {
         'success': true,
         'user': {'id': '123', 'email': email, 'name': name, 'phone': phone},
+        'token': 'fake_jwt_token_12345', // Token simulado
       };
     } catch (e) {
       debugPrint('Registration error: $e');
       return {'success': false, 'error': e.toString()};
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      debugPrint('Simulating logout');
+      // Simulação de logout
+      await Future.delayed(Duration(seconds: 1));
+      debugPrint('Logout simulated successfully');
+    } catch (e) {
+      debugPrint('Logout error: $e');
+      rethrow;
     }
   }
 
@@ -192,6 +206,4 @@ class ApiService {
   }
 
   createUser(Map<String, String> userData) {}
-
-  logout() {}
 }

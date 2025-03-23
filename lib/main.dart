@@ -5,10 +5,15 @@ import 'package:restaurant_delivery/config/routes/app_router.dart';
 import 'package:restaurant_delivery/core/utils/dependency_injection.dart';
 import 'package:restaurant_delivery/presentation/bloc/auth/auth_bloc.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   debugPrint('Starting app initialization...');
+
+  // Inicializar o Hive
+  await Hive.initFlutter();
+  debugPrint('Hive initialized successfully');
 
   // Inicializar dependências com tratamento de erro detalhado
   try {

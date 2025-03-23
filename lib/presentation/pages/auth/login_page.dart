@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:restaurant_delivery/presentation/bloc/auth/auth_bloc.dart';
 import 'package:restaurant_delivery/presentation/widgets/custom_button.dart';
 import 'package:restaurant_delivery/presentation/widgets/custom_text_field.dart';
+import 'package:hive/hive.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -28,8 +29,14 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocConsumer<AuthBloc, AuthState>(
-        listener: (context, state) {
+        listener: (context, state) async {
           if (state is AuthAuthenticated) {
+            // Salvar o token no Hive
+            final box = Hive.box('app_storage');
+            box.put('auth_token', state.token); // Salvar o token real
+            debugPrint('Token salvo no Hive: ${box.get('auth_token')}');
+
+            // Navegar para a página inicial
             context.go('/');
           } else if (state is AuthError) {
             ScaffoldMessenger.of(
