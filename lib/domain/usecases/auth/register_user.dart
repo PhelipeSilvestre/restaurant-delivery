@@ -11,4 +11,11 @@ class RegisterUser {
   Future<Either<Failure, User>> call(User user) async {
     return await repository.register(user.email, user.name);
   }
+
+  execute({
+    required String name,
+    required String email,
+    required String password,
+    String? phone,
+  }) {}
 }

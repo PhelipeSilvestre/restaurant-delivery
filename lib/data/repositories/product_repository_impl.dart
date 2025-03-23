@@ -33,4 +33,10 @@ class ProductRepositoryImpl implements ProductRepository {
   Future<void> deleteProduct(String id) async {
     await apiService.delete('/products/$id');
   }
+
+  @override
+  getProducts() {
+    // TODO: implement getProducts
+    throw UnimplementedError();
+  }
 }

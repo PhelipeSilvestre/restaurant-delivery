@@ -14,8 +14,10 @@ class LoginUser {
     }
     return await authRepository.login(email, password);
   }
+
+  execute({required String email, required String password}) {}
 }
 
 class InvalidInputFailure extends Failure {
-  InvalidInputFailure(super.message);
+  InvalidInputFailure(message) : super(message: '');
 }

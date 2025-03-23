@@ -1,7 +1,9 @@
 import 'package:get_it/get_it.dart';
+import 'package:restaurant_delivery/data/datasources/database.dart';
 import 'package:restaurant_delivery/data/datasources/remote/api_service.dart';
 import 'package:restaurant_delivery/data/repositories/auth_repository_impl.dart';
 import 'package:restaurant_delivery/data/repositories/product_repository_impl.dart';
+import 'package:restaurant_delivery/data/repositories/user_repository.dart';
 import 'package:restaurant_delivery/domain/repositories/auth_repository.dart';
 import 'package:restaurant_delivery/domain/repositories/product_repository.dart';
 import 'package:restaurant_delivery/domain/usecases/auth/login_user.dart';
@@ -16,10 +18,16 @@ Future<void> setupDependencies() async {
   // Serviços externos
   sl.registerLazySingleton(() => ApiService());
 
+  // Inicializar o banco de dados
+  final db = Database();
+  await db.connect();
+  sl.registerLazySingleton(() => db);
+
   // Repositórios
   sl.registerLazySingleton<AuthRepository>(
     () => AuthRepositoryImpl(apiService: sl()),
   );
+  sl.registerLazySingleton(() => UserRepository());
 
   sl.registerLazySingleton<ProductRepository>(
     () => ProductRepositoryImpl(apiService: sl()),
@@ -33,5 +41,7 @@ Future<void> setupDependencies() async {
   // BLoCs
   sl.registerFactory(() => AuthBloc(loginUser: sl(), registerUser: sl()));
 
-  sl.registerFactory(() => ProductBloc(getProducts: sl()));
+  sl.registerFactory(
+    () => ProductBloc(getProducts: sl(), productRepository: sl()),
+  );
 }

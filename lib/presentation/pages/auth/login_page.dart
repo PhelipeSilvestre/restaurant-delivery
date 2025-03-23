@@ -48,9 +48,15 @@ class _LoginPageState extends State<LoginPage> {
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
                     // Logo do restaurante
-                    Image.asset('assets/images/logo.png', height: 120),
-                    const SizedBox(height: 48),
-
+                    // Image.asset('assets/images/logo.png', height: 120),
+                    // const SizedBox(height: 48),
+                    const Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
                     // Email Field
                     CustomTextField(
                       controller: _emailController,

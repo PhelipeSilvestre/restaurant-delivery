@@ -1,6 +1,13 @@
 // TODO Implement this library.
-abstract class Failure {
+class ServerFeilure extends Failure {
+  @override
   final String message;
 
-  Failure(this.message);
+  ServerFeilure({required this.message}) : super(message: 'Server Failure');
+}
+
+class Failure {
+  final String message;
+
+  Failure({required this.message});
 }

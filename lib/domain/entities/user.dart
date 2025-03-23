@@ -15,6 +15,8 @@ class User extends Equatable {
     this.phone,
     this.photoUrl,
     required this.createdAt,
+    required String username,
+    required String password,
   });
 
   @override
