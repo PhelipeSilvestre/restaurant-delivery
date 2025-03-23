@@ -48,7 +48,10 @@ dependencies:
   
   # Banco de dados
   postgres: ^2.5.4
+
+  #supabase
   supabase: ^0.2.8
+  supabase_flutter: ^0.2.12
   
   # Armazenamento local
   hive: ^2.2.3

@@ -20,7 +20,7 @@ class RestaurantApp extends StatelessWidget {
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
         themeMode: ThemeMode.system,
-        routerConfig: AppRouter.router,
+        routerConfig: AppRouter.getRouter(),
       ),
     );
   }

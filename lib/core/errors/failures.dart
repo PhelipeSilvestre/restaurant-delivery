@@ -1,13 +1,26 @@
-// TODO Implement this library.
-class ServerFeilure extends Failure {
-  @override
+import 'package:equatable/equatable.dart';
+
+abstract class Failure extends Equatable {
   final String message;
 
-  ServerFeilure({required this.message}) : super(message: 'Server Failure');
+  const Failure(this.message);
+
+  @override
+  List<Object> get props => [message];
 }
 
-class Failure {
-  final String message;
+class ServerFailure extends Failure {
+  const ServerFailure(String message) : super(message);
+}
 
-  Failure({required this.message});
+class NetworkFailure extends Failure {
+  const NetworkFailure(String message) : super(message);
+}
+
+class CacheFailure extends Failure {
+  const CacheFailure(String message) : super(message);
+}
+
+class AuthFailure extends Failure {
+  const AuthFailure(String message) : super(message);
 }

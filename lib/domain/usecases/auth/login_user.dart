@@ -1,23 +1,19 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
+import 'package:restaurant_delivery/core/errors/failures.dart';
 import 'package:restaurant_delivery/domain/entities/user.dart';
 import 'package:restaurant_delivery/domain/repositories/auth_repository.dart';
-import 'package:restaurant_delivery/core/errors/failures.dart';
 
 class LoginUser {
-  final AuthRepository authRepository;
+  final AuthRepository repository;
 
-  LoginUser(this.authRepository);
+  LoginUser(this.repository);
 
-  Future<Either<Failure, User>> call(String email, String password) async {
-    if (email.isEmpty || password.isEmpty) {
-      return Left(InvalidInputFailure('Email or password cannot be empty'));
-    }
-    return await authRepository.login(email, password);
+  Future<Either<Failure, User>> execute({
+    required String email,
+    required String password,
+  }) async {
+    debugPrint('LoginUser usecase: Executing login for: $email');
+    return await repository.login(email: email, password: password);
   }
-
-  execute({required String email, required String password}) {}
-}
-
-class InvalidInputFailure extends Failure {
-  InvalidInputFailure(message) : super(message: '');
 }

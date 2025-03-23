@@ -1,4 +1,6 @@
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
+import 'package:restaurant_delivery/core/errors/exceptions.dart';
 import 'package:restaurant_delivery/core/errors/failures.dart';
 import 'package:restaurant_delivery/data/datasources/remote/api_service.dart';
 import 'package:restaurant_delivery/domain/entities/user.dart';
@@ -10,64 +12,80 @@ class AuthRepositoryImpl implements AuthRepository {
   AuthRepositoryImpl({required this.apiService});
 
   @override
-  Future<bool> login(String username, String password) async {
-    // Implement your login logic here
+  Future<Either<Failure, User>> login({
+    required String email,
+    required String password,
+  }) async {
     try {
-      // Simulate API call or authentication logic
-      if (username == 'admin' && password == 'password') {
-        return true;
+      debugPrint('AuthRepositoryImpl: Attempting login for: $email');
+      final response = await apiService.login(email, password);
+
+      if (response['success'] == true) {
+        final userData = response['user'];
+        final user = User(
+          id: userData['id'] ?? '',
+          name: userData['name'] ?? '',
+          email: userData['email'] ?? '',
+          phone: userData['phone'],
+        );
+        debugPrint('AuthRepositoryImpl: Login successful for: $email');
+        return Right(user);
+      } else {
+        debugPrint('AuthRepositoryImpl: Login failed: ${response['error']}');
+        return Left(AuthFailure(response['error'] ?? 'Login failed'));
       }
-      return false;
+    } on ServerException catch (e) {
+      debugPrint('AuthRepositoryImpl: Server exception: ${e.message}');
+      return Left(ServerFailure(e.message));
+    } on NetworkException catch (e) {
+      debugPrint('AuthRepositoryImpl: Network exception: ${e.message}');
+      return Left(NetworkFailure(e.message));
     } catch (e) {
-      // Handle exceptions
-      rethrow;
+      debugPrint('AuthRepositoryImpl: Unexpected error: $e');
+      return Left(ServerFailure(e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, User>> register({
+    required String name,
+    required String email,
+    required String password,
+    required String phone,
+  }) async {
+    try {
+      debugPrint('AuthRepositoryImpl: Attempting register for: $email');
+      final response = await apiService.register(name, email, password, phone);
+
+      if (response['success'] == true) {
+        final userData = response['user'];
+        final user = User(
+          id: userData['id'] ?? '',
+          name: userData['name'] ?? '',
+          email: userData['email'] ?? '',
+          phone: userData['phone'],
+        );
+        debugPrint('AuthRepositoryImpl: Registration successful for: $email');
+        return Right(user);
+      } else {
+        debugPrint(
+          'AuthRepositoryImpl: Registration failed: ${response['error']}',
+        );
+        return Left(AuthFailure(response['error'] ?? 'Registration failed'));
+      }
+    } on ServerException catch (e) {
+      return Left(ServerFailure(e.message));
+    } on NetworkException catch (e) {
+      return Left(NetworkFailure(e.message));
+    } catch (e) {
+      return Left(ServerFailure(e.toString()));
     }
   }
 
   @override
   Future<void> logout() async {
-    // Implement your logout logic here
-    try {
-      // Simulate logout process
-      print('User logged out');
-    } catch (e) {
-      // Handle exceptions
-      rethrow;
-    }
-  }
-
-  @override
-  Future<Either<Failure, User>> register(
-    String username,
-    String password,
-  ) async {
-    // Implement your registration logic here
-    try {
-      // Simulate registration process
-      final user = User(
-        username: username,
-        id: '',
-        name: '',
-        email: '',
-        password: password,
-        createdAt: DateTime.now(),
-      ); // Replace with actual user creation logic
-      return Right(user);
-    } catch (e) {
-      // Handle exceptions
-      return Left(Failure(message: 'Registration failed: ${e.toString()}'));
-    }
-  }
-
-  @override
-  Future<String?> getCurrentUserId() {
-    // TODO: implement getCurrentUserId
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<bool> isSignedIn() {
-    // TODO: implement isSignedIn
-    throw UnimplementedError();
+    // Implementar lógica de logout
+    await Future.delayed(const Duration(seconds: 1));
+    return;
   }
 }

@@ -4,7 +4,7 @@
 class UnauthorizedException implements Exception {
   final String message;
 
-  UnauthorizedException([this.message = "Unauthorized access."]);
+  UnauthorizedException(this.message);
 
   @override
   String toString() => "UnauthorizedException: $message";
@@ -13,7 +13,7 @@ class UnauthorizedException implements Exception {
 class NotFoundException implements Exception {
   final String message;
 
-  NotFoundException([this.message = "Resource not found."]);
+  NotFoundException(this.message);
 
   @override
   String toString() => "NotFoundException: $message";
@@ -22,7 +22,7 @@ class NotFoundException implements Exception {
 class ServerException implements Exception {
   final String message;
 
-  ServerException([this.message = "Server error occurred."]);
+  ServerException(this.message);
 
   @override
   String toString() => "ServerException: $message";
@@ -31,7 +31,7 @@ class ServerException implements Exception {
 class RequestCancelledException implements Exception {
   final String message;
 
-  RequestCancelledException([this.message = "Request was cancelled."]);
+  RequestCancelledException(this.message);
 
   @override
   String toString() => "RequestCancelledException: $message";
@@ -40,8 +40,26 @@ class RequestCancelledException implements Exception {
 class NetworkException implements Exception {
   final String message;
 
-  NetworkException([this.message = "An unknown network error occurred."]);
+  NetworkException(this.message);
 
   @override
   String toString() => "NetworkException: $message";
+}
+
+class CacheException implements Exception {
+  final String message;
+
+  CacheException(this.message);
+
+  @override
+  String toString() => "CacheException: $message";
+}
+
+class AuthException implements Exception {
+  final String message;
+
+  AuthException(this.message);
+
+  @override
+  String toString() => "AuthException: $message";
 }
