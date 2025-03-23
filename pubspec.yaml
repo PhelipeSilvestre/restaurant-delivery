@@ -30,21 +30,63 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
+
+  # Gerenciamento de estado
+  flutter_bloc: ^8.1.3
+  equatable: ^2.0.5
+  
+  # Injeção de dependência
+  get_it: ^7.6.4
+  
+  # Navegação
+  go_router: ^12.1.1
+  
+  # API e Rede
+  dio: ^5.3.3
+  connectivity_plus: ^5.0.1
+  
+  # Armazenamento local
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  shared_preferences: ^2.2.2
+  
+  # Firebase (opcional - se você decidir usar Firebase)
+  firebase_core: ^2.15.1
+  firebase_auth: ^4.7.3
+  cloud_firestore: ^4.8.5
+  firebase_storage: ^11.2.6
+  firebase_messaging: ^14.6.7
+  
+  # Utilidades
+  cached_network_image: ^3.3.0
+  intl: ^0.18.1
+  flutter_dotenv: ^5.1.0
+  flutter_svg: ^2.0.7
+  image_picker: ^1.0.4
+  url_launcher: ^6.1.14
+  dartz: ^0.10.1
+  
+  # Pagamentos
+  mercado_pago_mobile_checkout: ^0.2.0 # Ou outro plugin de pagamento relevante para seu país
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner: ^2.4.6
+  flutter_gen_runner: ^5.3.1
+  freezed: ^2.4.5
+  hive_generator: ^2.0.1
+  mockito: ^5.4.2
+  bloc_test: ^9.1.4
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^5.0.0
+ 
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
